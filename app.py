@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
-from langchain_openai import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 import openai
@@ -18,7 +18,8 @@ project_type = st.selectbox("Select Project Type", ["Infrastructure", "High-Rise
 project_phase = st.selectbox("Select Project Phase", ["Design", "Procurement", "Construction", "Testing"])
 
 # OpenAI API Key (Set manually or from secrets)
-openai.api_key = st.secrets["your-openai-api-key"]
+import os
+openai.api_key = os.getenv("OPENAI_API_KEY", "your-backup-api-key-here")
 
 # Initialize GPT-4 model
 llm = ChatOpenAI(model_name="gpt-4", temperature=0.2)
