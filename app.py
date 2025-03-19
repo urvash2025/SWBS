@@ -19,7 +19,13 @@ project_phase = st.selectbox("Select Project Phase", ["Design", "Procurement", "
 
 # OpenAI API Key (Set manually or from secrets)
 import os
-openai.api_key = os.getenv("OPENAI_API_KEY", "your-backup-api-key-here")
+api_key = os.getenv("OPENAI_API_KEY")
+
+if not api_key:
+    st.error("Error: OpenAI API key is missing. Set it in Streamlit secrets.")
+else:
+    openai.api_key = api_key
+    st.success("OpenAI API Key Loaded Successfully!")
 
 # Initialize GPT-4 model
 llm = ChatOpenAI(model_name="gpt-4", temperature=0.2)
